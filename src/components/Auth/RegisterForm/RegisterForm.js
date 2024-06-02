@@ -2,17 +2,24 @@ import { View } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { globalStyles } from "../../../styles";
 import { useFormik } from "formik";
+import { authCtrl } from "../../../api";
 import { initialValues, validateOnChange } from "./RegisterForm.form";
 
 export function RegisterForm(props) {
   const { showLogin } = props;
+
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validateOnChange(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
-      console.log("form enviado");
-      console.log(formValue);
+      try {
+        const { email, username, password } = formValue;
+        await authCtrl.register(email, username, password);
+        showLogin();
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
