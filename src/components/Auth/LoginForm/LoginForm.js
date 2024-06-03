@@ -9,7 +9,7 @@ import { initialValues, validationSchema } from "./LoginForm.form";
 
 export function LoginForm(props) {
   const { showRegister } = props;
-  const useAuthData = useAuth();
+  const { login } = useAuth();
 
   const formik = useFormik({
     initialValues: initialValues(),
@@ -19,7 +19,7 @@ export function LoginForm(props) {
       try {
         const { email, password } = formValue;
         const response = await authCtrl.login(email, password);
-        console.log(response);
+        login(response.jwt);
       } catch (error) {
         Toast.show("Usuario o contraseña incorrecto", {
           position: Toast.positions.CENTER,
