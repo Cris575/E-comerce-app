@@ -5,6 +5,9 @@ export const AuthContext = createContext();
 
 export function AuthProvider(props) {
   const { children } = props;
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     recoverySession();
   }, []);
@@ -12,25 +15,28 @@ export function AuthProvider(props) {
   const recoverySession = async () => {
     const token = await storageCtrl.getToken();
     // console.log("TOKEN -->", token);
+    setLoading(false);
   };
 
   const login = async (token) => {
     try {
       await storageCtrl.setToken(token);
-      console.log(token);
       const response = await userCtrl.getMe();
-      console.log(response);
+      setUser(response);
+      setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   };
 
   const data = {
-    user: null,
+    user,
     login,
     logout: () => console.log("LOGOUT"),
     updateUser: () => console.log("UPDATE_USER"),
   };
 
+  if (loading) return null;
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
 }
