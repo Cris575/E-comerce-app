@@ -2,12 +2,14 @@ import { View } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { useFormik } from "formik";
 import Toast from "react-native-root-toast";
-import { authCtrl, authCtrlt } from "../../../api";
+import { authCtrl } from "../../../api";
+import { useAuth } from "../../../hooks";
 import { globalStyles } from "../../../styles";
 import { initialValues, validationSchema } from "./LoginForm.form";
 
 export function LoginForm(props) {
   const { showRegister } = props;
+  const useAuthData = useAuth();
 
   const formik = useFormik({
     initialValues: initialValues(),
