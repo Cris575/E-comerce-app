@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext } from "react";
 import { storageCtrl, userCtrl } from "../api";
+import { fn } from "../utils";
 
 export const AuthContext = createContext();
 
@@ -14,8 +15,18 @@ export function AuthProvider(props) {
 
   const recoverySession = async () => {
     const token = await storageCtrl.getToken();
-    // console.log("TOKEN -->", token);
-    setLoading(false);
+
+    if (!token) {
+      logout();
+      setLoading(false);
+      return;
+    }
+
+    if (fn.hasTokenExpired(token)) {
+      logout();
+    } else {
+      await login(token);
+    }
   };
 
   const login = async (token) => {
@@ -30,10 +41,15 @@ export function AuthProvider(props) {
     }
   };
 
+  const logout = async () => {
+    await storageCtrl.removeToken();
+    setUser(null);
+  };
+
   const data = {
     user,
     login,
-    logout: () => console.log("LOGOUT"),
+    logout,
     updateUser: () => console.log("UPDATE_USER"),
   };
 
