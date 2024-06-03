@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from "react";
-import { storageCtrl } from "../api";
+import { storageCtrl, userCtrl } from "../api";
 
 export const AuthContext = createContext();
 
@@ -11,12 +11,15 @@ export function AuthProvider(props) {
 
   const recoverySession = async () => {
     const token = await storageCtrl.getToken();
-    console.log("TOKEN -->", token);
+    // console.log("TOKEN -->", token);
   };
 
   const login = async (token) => {
     try {
       await storageCtrl.setToken(token);
+      console.log(token);
+      const response = await userCtrl.getMe();
+      console.log(response);
     } catch (error) {
       console.error(error);
     }
