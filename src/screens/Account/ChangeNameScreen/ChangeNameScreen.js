@@ -6,16 +6,24 @@ import { initialValues, validationSchema } from "./ChangeNameScreen.form";
 import { styles } from "./ChangeNameScreen.styles";
 import Toast from "react-native-root-toast";
 import { useAuth } from "../../../hooks";
+import { userCtrl } from "../../../api";
+import { useNavigation } from "@react-navigation/native";
 
 export function ChangeNameScreen() {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
+  const navigation = useNavigation();
+
   const formik = useFormik({
     initialValues: initialValues(user.firstname, user.lastname),
-    validationSchema: validationSchema("", ""),
+    validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        console.log(formValue);
+        await userCtrl.update(user.id, formValue);
+        updateUser("firstname", formValue.firstname);
+        updateUser("lastname", formValue.lastname);
+
+        navigation.goBack();
       } catch (error) {
         Toast.show("Error al actulizar los datos", { position: Toast.positions.CENTER });
       }
