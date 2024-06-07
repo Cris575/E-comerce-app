@@ -2,15 +2,17 @@ import { useAuth } from "../../hooks";
 import { useState, useEffect } from "react";
 import { ProductBanners, ProductBannersro } from "../../components/Shared";
 import { Layout } from "../../layouts";
-import { homeBannerCtrl } from "../../api";
+import { homeBannerCtrl, productControl } from "../../api";
 import Toast from "react-native-root-toast";
 
 export function HomeScreen() {
   const { logout } = useAuth();
   const [banners, setBanner] = useState(null);
+  const [products, setProducts] = useState(null);
 
   useEffect(() => {
     getBanners();
+    getProducts();
   }, []);
 
   const getBanners = async () => {
@@ -22,5 +24,13 @@ export function HomeScreen() {
     }
   };
 
+  const getProducts = async () => {
+    try {
+      const response = await productControl.getLastedPublished();
+      setProducts(response?.data || null);
+    } catch (error) {
+      Toast.show("Error al obtener los productos", { positio: Toast.positions.CENTER });
+    }
+  };
   return <Layout.Basic>{banners && <ProductBanners banners={banners} />}</Layout.Basic>;
 }
