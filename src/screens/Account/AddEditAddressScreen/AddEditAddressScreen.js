@@ -40,6 +40,7 @@ export function AddEditAddressScreen(props) {
     onSubmit: async (formValue) => {
       try {
         if (addressId) {
+          await addressCtrl.update(addressId, formValue);
         } else {
           await addressCtrl.create(user.id, formValue);
         }

@@ -57,8 +57,31 @@ async function getAddresById(addressId) {
   }
 }
 
+async function updateAddres(addressId, data) {
+  try {
+    const url = `${ENV.API_URL}/${ENV.ENDPOINTS.ADDRESSES}/${addressId}`;
+    const params = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        data,
+      }),
+    };
+
+    const response = await authFech(url, params);
+
+    if (response.status !== 200) throw response;
+
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+}
 export const addressCtrl = {
   getAll: getAllAddresses,
   get: getAddresById,
   create: createAddress,
+  update: updateAddres,
 };
