@@ -10,12 +10,15 @@ export function AddressesScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      (async () => {
-        const response = await addressCtrl.getAll(user.id);
-        console.log(response);
-      })();
-    })
+      retiveAddresses();
+    }, [])
   );
+
+  const retiveAddresses = async () => {
+    const response = await addressCtrl.getAll(user.id);
+    setAddresse(response?.data || []);
+    console.log(response.data);
+  };
   return (
     <View>
       <Text>AddressesScreen</Text>
