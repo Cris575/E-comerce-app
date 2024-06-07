@@ -54,7 +54,14 @@ export function AddEditAddressScreen(props) {
 
   const retriveAddres = async () => {
     const response = await addressCtrl.get(addressId);
-    console.log(response);
+    await formik.setFieldValue("title", response.title);
+    await formik.setFieldValue("name", response.name);
+    await formik.setFieldValue("address", response.address);
+    await formik.setFieldValue("postal_code", response.postal_code);
+    await formik.setFieldValue("city", response.city);
+    await formik.setFieldValue("state", response.state);
+    await formik.setFieldValue("country", response.country);
+    await formik.setFieldValue("phone", response.phone);
   };
   return (
     <KeyboardAwareScrollView extraScrollHeight={25}>

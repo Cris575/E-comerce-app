@@ -51,7 +51,7 @@ async function getAddresById(addressId) {
 
     const result = await response.json();
 
-    return result;
+    return { ...result.data.attributes, id: result.data.id };
   } catch (error) {
     throw error;
   }
