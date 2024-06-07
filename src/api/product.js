@@ -18,6 +18,25 @@ async function getLastedPublished(limite = 20) {
   }
 }
 
+async function searchProduct(text) {
+  try {
+    const searchTitleFilter = `filters[title][$contains]=${text}`;
+    const pagination = "pagination[pageSize]=100";
+    const populate = "populate=*";
+    const filters = `${searchTitleFilter}&${pagination}&${populate}`;
+
+    const url = `${ENV.API_URL}/${ENV.ENDPOINTS.PRODUCTS}?${filters}`;
+
+    const response = await fetch(url);
+
+    if (response.status !== 200) throw response;
+
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+}
 export const productControl = {
   getLastedPublished,
+  search: searchProduct,
 };

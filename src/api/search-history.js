@@ -22,7 +22,7 @@ async function updateSearchHistory(searchText) {
   }
 
   history.push({
-    serach: searchText,
+    search: searchText,
     date: new Date(),
   });
 

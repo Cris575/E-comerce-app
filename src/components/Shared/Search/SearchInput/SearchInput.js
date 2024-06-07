@@ -1,7 +1,9 @@
 import { View, Animated, Keyboard } from "react-native";
 import { Searchbar } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 import { searchHistoryCtrl } from "../../../../api";
 import { useSearch } from "../../../../hooks";
+import { screensName } from "../../../../utils";
 import { styles } from "./SearchInput.styles";
 import { AnimatedIcon, searchAnimation } from "./SearchInput.animation";
 import { useState } from "react";
@@ -10,8 +12,8 @@ import { SearchHistory } from "../SearchHistory";
 export function SearchInput() {
   const [containerHeigth, setContainerHeigth] = useState(0);
   const [openHistory, setOpenHistory] = useState(false);
-
   const { searchText, setSearchText } = useSearch();
+  const navigation = useNavigation();
 
   const openCloseHistory = () => {
     setOpenHistory((prevState) => !prevState);
@@ -26,8 +28,14 @@ export function SearchInput() {
     openCloseHistory();
   };
 
-  const onSearch = async () => {
-    await searchHistoryCtrl.update(searchText);
+  const onSearch = async (reuseSearch) => {
+    const isReuse = typeof reuseSearch === "string";
+    if (!isReuse) {
+      await searchHistoryCtrl.update(searchText);
+    }
+
+    closeSearch();
+    navigation.navigate(screensName.home.search);
   };
 
   return (
@@ -53,11 +61,7 @@ export function SearchInput() {
           />
         </Animated.View>
       </View>
-      <SearchHistory
-        open={openHistory}
-        height={containerHeigth}
-        onSearch={() => console.log("Volver a buscar")}
-      />
+      <SearchHistory open={openHistory} height={containerHeigth} onSearch={onSearch} />
     </View>
   );
 }
