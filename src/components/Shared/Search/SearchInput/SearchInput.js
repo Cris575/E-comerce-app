@@ -1,10 +1,13 @@
 import { View, Text } from "react-native";
-import React from "react";
+import { Searchbar } from "react-native-paper";
+import { styles } from "./SearchInput.styles";
 
 export function SearchInput() {
   return (
-    <View>
-      <Text>SearchInput</Text>
+    <View style={styles.container}>
+      <View style={styles.containerInput}>
+        <Searchbar placeholder="Buscar producto" autoCapitalize="none" style={styles.searchBar} />
+      </View>
     </View>
   );
 }
