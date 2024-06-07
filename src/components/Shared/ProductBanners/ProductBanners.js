@@ -3,15 +3,18 @@ import { Carousel, Pagination } from "react-native-snap-carousel";
 import { styles } from "./ProductBanners.styles";
 import { screensName } from "../../../utils";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
+import { size } from "lodash";
 
 const width = Dimensions.get("window").width;
 
 export function ProductBanners(props) {
   const { banners } = props;
   const navigation = useNavigation();
+  const [bannerActive, setBannerActive] = useState(0);
 
   const goToProduct = (id) => {
-    navigation.push(screensName.home.product, { productId: id });
+    navigation.navigate(screensName.home.product, { productId: id });
   };
   const renderItem = ({ item }) => {
     const urlImage = item.attributes.banner.data.attributes.url;
@@ -31,6 +34,16 @@ export function ProductBanners(props) {
         sliderWidth={width}
         itemWidth={width}
         renderItem={renderItem}
+        onSnapToItem={(index) => setBannerActive(index)}
+      />
+      <Pagination
+        dotsLength={size(banners)}
+        activeDotIndex={bannerActive}
+        inactiveDotOpacity={0.6}
+        inactiveDotScale={0.6}
+        containerStyle={styles.dotsContainer}
+        dotStyle={styles.dot}
+        inactiveDotStyle={styles.dot}
       />
     </View>
   );
