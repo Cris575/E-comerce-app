@@ -1,6 +1,6 @@
 import { useAuth } from "../../hooks";
 import { useState, useEffect } from "react";
-import { ProductBanners, ProductBannersro } from "../../components/Shared";
+import { ProductBanners, GridProducts } from "../../components/Shared";
 import { Layout } from "../../layouts";
 import { homeBannerCtrl, productControl } from "../../api";
 import Toast from "react-native-root-toast";
@@ -32,5 +32,10 @@ export function HomeScreen() {
       Toast.show("Error al obtener los productos", { positio: Toast.positions.CENTER });
     }
   };
-  return <Layout.Basic>{banners && <ProductBanners banners={banners} />}</Layout.Basic>;
+  return (
+    <Layout.Basic>
+      {banners && <ProductBanners banners={banners} />}
+      <GridProducts title="Nuevos productos" products={products} />
+    </Layout.Basic>
+  );
 }
