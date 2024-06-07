@@ -42,7 +42,23 @@ async function createAddress(userId, data) {
   }
 }
 
+async function getAddresById(addressId) {
+  try {
+    const url = `${ENV.API_URL}/${ENV.ENDPOINTS.ADDRESSES}/${addressId}`;
+    const response = await authFech(url);
+
+    if (response.status !== 200) throw response;
+
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export const addressCtrl = {
   getAll: getAllAddresses,
+  get: getAddresById,
   create: createAddress,
 };

@@ -27,6 +27,12 @@ export function AddEditAddressScreen(props) {
     }
   }, []);
 
+  useEffect(() => {
+    if (addressId) {
+      retriveAddres();
+    }
+  }, [addressId]);
+
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
@@ -45,6 +51,11 @@ export function AddEditAddressScreen(props) {
       }
     },
   });
+
+  const retriveAddres = async () => {
+    const response = await addressCtrl.get(addressId);
+    console.log(response);
+  };
   return (
     <KeyboardAwareScrollView extraScrollHeight={25}>
       <View style={styles.container}>
