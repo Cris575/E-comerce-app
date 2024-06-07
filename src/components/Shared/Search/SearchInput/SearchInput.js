@@ -3,15 +3,23 @@ import { Searchbar } from "react-native-paper";
 import { styles } from "./SearchInput.styles";
 import { AnimatedIcon, searchAnimation } from "./SearchInput.animation";
 import { useState } from "react";
+import { SearchHistory } from "../SearchHistory";
 
 export function SearchInput() {
   const [containerHeigth, setContainerHeigth] = useState(0);
+  const [openHistory, setOpenHistory] = useState(false);
+
+  const openCloeHistory = () => {
+    setOpenHistory((prevState) => !prevState);
+  };
   const openSearch = () => {
     searchAnimation.transition.start();
+    openCloeHistory();
   };
   const closeSearch = () => {
     searchAnimation.transitionReset.start();
     Keyboard.dismiss();
+    openCloeHistory();
   };
 
   return (
@@ -34,6 +42,11 @@ export function SearchInput() {
           />
         </Animated.View>
       </View>
+      <SearchHistory
+        open={openHistory}
+        height={containerHeigth}
+        onSearch={() => console.log("Volver a buscar")}
+      />
     </View>
   );
 }
