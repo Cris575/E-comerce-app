@@ -4,7 +4,6 @@ import { styles } from "./Address.style";
 
 export function Address(props) {
   const { address } = props;
-  console.log(props);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{address.title}</Text>
