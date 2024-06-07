@@ -9,7 +9,7 @@ export function AddressList(props) {
   return (
     <View style={styles.container}>
       {map(addresses, (address) => (
-        <Address key={address.id} address={address.attributes} />
+        <Address key={address.id} addressId={address.id} address={address.attributes} />
       ))}
     </View>
   );

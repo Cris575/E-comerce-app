@@ -11,11 +11,20 @@ import { globalStyles } from "../../../styles";
 import { initialValues, validationSchema } from "./AddEditAddressScreen.form";
 import { styles } from "./AddEditAddressScreen.styles";
 
-export function AddEditAddressScreen() {
+export function AddEditAddressScreen(props) {
+  const {
+    route: { params },
+  } = props;
   const navigation = useNavigation();
   const { user } = useAuth();
+  const addressId = params?.addressId;
+
   useEffect(() => {
-    navigation.setOptions({ title: "Crear direccion" });
+    if (addressId) {
+      navigation.setOptions({ title: "Editar dirección" });
+    } else {
+      navigation.setOptions({ title: "Crear dirección" });
+    }
   }, []);
 
   const formik = useFormik({
@@ -24,7 +33,10 @@ export function AddEditAddressScreen() {
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        await addressCtrl.create(user.id, formValue);
+        if (addressId) {
+        } else {
+          await addressCtrl.create(user.id, formValue);
+        }
         navigation.goBack();
       } catch (error) {
         Toast.show("Error al crear o editar direccion", {
@@ -98,7 +110,7 @@ export function AddEditAddressScreen() {
           style={[globalStyles.form.btnSubmit, styles.btnSubmit]}
           onPress={formik.handleSubmit}
           loading={formik.isSubmitting}>
-          {/* {addressId ? "Actualizar dirección" : " Crear dirección"} */}
+          {addressId ? "Actualizar dirección" : " Crear dirección"}
         </Button>
       </View>
     </KeyboardAwareScrollView>
