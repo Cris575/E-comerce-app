@@ -79,9 +79,25 @@ async function updateAddres(addressId, data) {
     throw error;
   }
 }
+
+async function deleteAdress(addressId) {
+  try {
+    const url = `${ENV.API_URL}/${ENV.ENDPOINTS.ADDRESSES}/${addressId}`;
+    const params = {
+      method: "DELETE",
+    };
+
+    const response = await authFech(url, params);
+
+    if (response.status !== 200) throw response;
+
+    return await response.json();
+  } catch (error) {}
+}
 export const addressCtrl = {
   getAll: getAllAddresses,
   get: getAddresById,
   create: createAddress,
   update: updateAddres,
+  delete: deleteAdress,
 };

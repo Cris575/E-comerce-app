@@ -4,12 +4,17 @@ import { Address } from "./Address";
 import { styles } from "./AddressList.styles";
 
 export function AddressList(props) {
-  const { addresses } = props;
+  const { addresses, onReload } = props;
 
   return (
     <View style={styles.container}>
       {map(addresses, (address) => (
-        <Address key={address.id} addressId={address.id} address={address.attributes} />
+        <Address
+          key={address.id}
+          addressId={address.id}
+          address={address.attributes}
+          onReload={onReload}
+        />
       ))}
     </View>
   );

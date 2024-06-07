@@ -11,14 +11,17 @@ import { screensName } from "../../../utils";
 
 export function AddressesScreen() {
   const [addresse, setAddresse] = useState(null);
+  const [reload, setReload] = useState(false);
   const { user } = useAuth();
   const navigation = useNavigation();
 
   useFocusEffect(
     useCallback(() => {
       retiveAddresses();
-    }, [])
+    }, [reload])
   );
+
+  const onReload = () => setReload((precState) => !precState);
 
   const retiveAddresses = async () => {
     const response = await addressCtrl.getAll(user.id);
@@ -42,7 +45,7 @@ export function AddressesScreen() {
       ) : size(addresse) === 0 ? (
         <Text style={styles.noAddressText}>Crea tu primera dirección</Text>
       ) : (
-        <AddressList addresses={addresse} />
+        <AddressList addresses={addresse} onReload={onReload} />
       )}
     </ScrollView>
   );
