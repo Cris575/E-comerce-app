@@ -1,13 +1,13 @@
-import { SafeAreaView, Text } from "react-native";
 import { useAuth } from "../../hooks";
-import { Button } from "react-native-paper";
 import { useState, useEffect } from "react";
+import { ProductBanners, ProductBannersro } from "../../components/Shared";
+import { Layout } from "../../layouts";
 import { homeBannerCtrl } from "../../api";
 import Toast from "react-native-root-toast";
 
 export function HomeScreen() {
   const { logout } = useAuth();
-  const [banner, setBanner] = useState(null);
+  const [banners, setBanner] = useState(null);
 
   useEffect(() => {
     getBanners();
@@ -22,11 +22,5 @@ export function HomeScreen() {
     }
   };
 
-  return (
-    <SafeAreaView>
-      <Text>HomeScreen</Text>
-
-      <Button onPress={logout}>Cerrera sesión</Button>
-    </SafeAreaView>
-  );
+  return <Layout.Basic>{banners && <ProductBanners banners={banners} />}</Layout.Basic>;
 }
