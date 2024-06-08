@@ -66,8 +66,27 @@ async function deleteWishlist(userId, productId) {
   }
 }
 
+async function getAllProductWishlist(userId) {
+  try {
+    const userFilters = `filters[user][id][$eq]=${userId}`;
+    const populate = "populate[0]=product&populate[1]=product.main_image";
+    const filters = `${userFilters}&${populate}`;
+
+    const url = `${ENV.API_URL}/${ENV.ENDPOINTS.WISHLIST}?${filters}`;
+
+    const response = await authFech(url);
+
+    if (response.status !== 200) throw response;
+
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+}
+
 export const wishlistCtrl = {
   add: addWishlist,
   check: checkWishlist,
   delete: deleteWishlist,
+  getAllProducts: getAllProductWishlist,
 };
