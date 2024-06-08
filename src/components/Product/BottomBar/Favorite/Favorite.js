@@ -20,7 +20,6 @@ export function Favorite(props) {
       setLoading(true);
       await wishlistCtrl.add(user.id, productId);
     } catch (error) {
-      console.log(error);
       Toast.show("error en el prodcuto", {
         position: Toast.positions.CENTER,
       });

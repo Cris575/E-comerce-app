@@ -1,10 +1,10 @@
-import { size } from "lodash";
-import { authFetch } from "../lib";
+import { authFech } from "../lib";
 import { ENV } from "../utils";
 
 async function addWishlist(userId, productId) {
   try {
     const url = `${ENV.API_URL}/${ENV.ENDPOINTS.WISHLIST}`;
+    console.log(url);
     const params = {
       method: "POST",
       headers: {
@@ -17,11 +17,9 @@ async function addWishlist(userId, productId) {
         },
       }),
     };
-
-    const response = await authFetch(url, params);
+    const response = await authFech(url, params);
 
     if (response.status !== 200) throw response;
-
     return await response.json();
   } catch (error) {
     throw error;
@@ -30,7 +28,4 @@ async function addWishlist(userId, productId) {
 
 export const wishlistCtrl = {
   add: addWishlist,
-  // check: checkWishlist,
-  // delete: deleteWishlist,
-  // getAllProducts: getAllProductWishlist,
 };
