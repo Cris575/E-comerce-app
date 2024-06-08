@@ -4,6 +4,5 @@ import { useAuth } from "../hooks";
 
 export function RootNavigation() {
   const { user } = useAuth();
-
   return user ? <AppNavigation /> : <AuthScreen />;
 }

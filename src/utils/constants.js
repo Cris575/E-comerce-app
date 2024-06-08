@@ -11,6 +11,7 @@ export const ENV = {
     WISHLIST: "wishlists",
     PAYMENT_ORDER: "payment-order",
     ORDERS: "orders",
+    WISHLIST: "wishlist",
   },
   STORAGE: {
     TOKEN: "token",
