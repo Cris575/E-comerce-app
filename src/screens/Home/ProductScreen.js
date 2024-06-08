@@ -44,6 +44,7 @@ export function ProductScreen(props) {
         <>
           <Product.Title text={product.title} />
           <Product.CarouselImages images={images} />
+          <Product.Price price={product.price} discount={product.discount} />
         </>
       )}
     </Layout.Basic>
