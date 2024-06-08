@@ -1,8 +1,10 @@
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { Layout } from "../../layouts";
 import { useState, useEffect } from "react";
 import { productControl } from "../../api";
 import { forEach, set } from "lodash";
+import { LoadingScreen } from "../../components/Shared";
+import { Product } from "../../components/Product";
 
 export function ProductScreen(props) {
   const {
@@ -12,7 +14,6 @@ export function ProductScreen(props) {
   const [product, setProduct] = useState(null);
 
   const [images, setImages] = useState([]);
-  console.log(images);
 
   useEffect(() => {
     getProduct();
@@ -37,9 +38,14 @@ export function ProductScreen(props) {
   };
   return (
     <Layout.Basic>
-      <Text>ProductScreen</Text>
-
-      <Text>{productId}</Text>
+      {!product ? (
+        <LoadingScreen text="Cragando productos" size="large" />
+      ) : (
+        <>
+          <Product.Title text={product.title} />
+          <Product.CarouselImages images={images} />
+        </>
+      )}
     </Layout.Basic>
   );
 }
