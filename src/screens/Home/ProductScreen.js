@@ -37,21 +37,24 @@ export function ProductScreen(props) {
     }
   };
   return (
-    <Layout.Basic>
-      {!product ? (
-        <LoadingScreen text="Cragando productos" size="large" />
-      ) : (
-        <>
-          <Product.Title text={product.title} />
-          <Product.CarouselImages images={images} />
-          <View style={{ padding: 10 }}>
-            <Product.Price price={product.price} discount={product.discount} />
-            <Separator height={30} />
-            <Product.Characteristics text={product.characteristics} />
-            <Separator height={70} />
-          </View>
-        </>
-      )}
-    </Layout.Basic>
+    <>
+      <Layout.Basic>
+        {!product ? (
+          <LoadingScreen text="Cragando productos" size="large" />
+        ) : (
+          <>
+            <Product.Title text={product.title} />
+            <Product.CarouselImages images={images} />
+            <View style={{ padding: 10 }}>
+              <Product.Price price={product.price} discount={product.discount} />
+              <Separator height={30} />
+              <Product.Characteristics text={product.characteristics} />
+              <Separator height={70} />
+            </View>
+          </>
+        )}
+      </Layout.Basic>
+      {product && <Product.BottomBar productId={productId} />}
+    </>
   );
 }
