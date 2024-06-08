@@ -3,7 +3,7 @@ import { Layout } from "../../layouts";
 import { useState, useEffect } from "react";
 import { productControl } from "../../api";
 import { forEach, set } from "lodash";
-import { LoadingScreen } from "../../components/Shared";
+import { LoadingScreen, Separator } from "../../components/Shared";
 import { Product } from "../../components/Product";
 
 export function ProductScreen(props) {
@@ -44,7 +44,12 @@ export function ProductScreen(props) {
         <>
           <Product.Title text={product.title} />
           <Product.CarouselImages images={images} />
-          <Product.Price price={product.price} discount={product.discount} />
+          <View style={{ padding: 10 }}>
+            <Product.Price price={product.price} discount={product.discount} />
+            <Separator height={30} />
+            <Product.Characteristics text={product.characteristics} />
+            <Separator height={70} />
+          </View>
         </>
       )}
     </Layout.Basic>
