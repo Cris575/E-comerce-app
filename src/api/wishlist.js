@@ -5,7 +5,6 @@ import { ENV } from "../utils";
 async function addWishlist(userId, productId) {
   try {
     const url = `${ENV.API_URL}/${ENV.ENDPOINTS.WISHLIST}`;
-    console.log(url);
     const params = {
       method: "POST",
       headers: {
@@ -28,7 +27,6 @@ async function addWishlist(userId, productId) {
 }
 
 async function checkWishlist(userId, productId) {
-  console.log(userId, productId);
   try {
     const filterUser = `filters[user][id][$eq][0]=${userId}`;
     const filterProduct = `filters[product][id][$eq][1]=${productId}`;
@@ -44,7 +42,25 @@ async function checkWishlist(userId, productId) {
     if (size(result.data) === 0) {
       return false;
     }
-    return true;
+    return result.data[0];
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function deleteWishlist(userId, productId) {
+  try {
+    const dataFound = await checkWishlist(userId, productId);
+
+    if (dataFound) {
+      const url = `${ENV.API_URL}/${ENV.ENDPOINTS.WISHLIST}/${dataFound.id}`;
+      const params = { method: "DELETE" };
+      const response = await authFech(url, params);
+
+      if (response.status !== 200) throw response;
+
+      return true;
+    }
   } catch (error) {
     throw error;
   }
@@ -53,4 +69,5 @@ async function checkWishlist(userId, productId) {
 export const wishlistCtrl = {
   add: addWishlist,
   check: checkWishlist,
+  delete: deleteWishlist,
 };

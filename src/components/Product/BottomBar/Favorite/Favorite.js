@@ -36,8 +36,17 @@ export function Favorite(props) {
     setLoading(false);
   };
 
-  const deleteWisglist = () => {
-    console.log("ELIMINAR PRODUCTO DE LA LISTA");
+  const deleteWisglist = async () => {
+    try {
+      setLoading(true);
+      await wishlistCtrl.delete(user.id, productId);
+      setHasWishlist(false);
+    } catch (error) {
+      Toast.show("Error al elminar el producto de la lista", {
+        position: Toast.positions.CENTER,
+      });
+    }
+    setLoading(false);
   };
 
   if (hasWishlist === undefined) return null;
