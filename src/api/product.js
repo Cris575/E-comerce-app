@@ -36,7 +36,23 @@ async function searchProduct(text) {
     throw error;
   }
 }
+
+async function getProductById(id) {
+  try {
+    const populateFilter = "populate=*";
+    const url = `${ENV.API_URL}/${ENV.ENDPOINTS.PRODUCTS}/${id}?${populateFilter}`;
+
+    const response = await fetch(url);
+
+    if (response.status !== 200) throw response;
+
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+}
 export const productControl = {
   getLastedPublished,
   search: searchProduct,
+  getById: getProductById,
 };
