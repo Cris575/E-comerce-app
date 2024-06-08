@@ -12,8 +12,17 @@ export function Favorite(props) {
   const [hasWishlist, setHasWishlist] = useState(undefined);
 
   useEffect(() => {
-    setHasWishlist(false);
-  }, []);
+    checkWishlist();
+  }, [productId]);
+
+  const checkWishlist = async () => {
+    try {
+      const reponse = await wishlistCtrl.check(user.id, productId);
+      setHasWishlist(reponse);
+    } catch (error) {
+      setHasWishlist(false);
+    }
+  };
 
   const addWishlist = async () => {
     try {
@@ -26,14 +35,20 @@ export function Favorite(props) {
     }
     setLoading(false);
   };
+
+  const deleteWisglist = () => {
+    console.log("ELIMINAR PRODUCTO DE LA LISTA");
+  };
+
   if (hasWishlist === undefined) return null;
+
   return (
     <IconButton
       icon="heart"
       style={styles.iconButton}
       size={30}
-      iconColor="#fff"
-      onPress={addWishlist}
+      iconColor={hasWishlist ? "#16222b" : "#fff"}
+      onPress={hasWishlist ? deleteWisglist : addWishlist}
       disabled={loading}
     />
   );
