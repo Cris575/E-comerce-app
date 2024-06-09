@@ -16,6 +16,7 @@ export function CartScreen() {
   const { cart } = useCart();
   const { user } = useAuth();
   const [addresses, setAddresses] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState(null);
 
   useEffect(() => {
     getProducts();
@@ -61,8 +62,12 @@ export function CartScreen() {
         <KeyboardAwareScrollView extraScrollHeight={25}>
           <View style={styles.container}>
             <Cart.ProductList products={products} />
-            <Cart.AddressList addresses={addresses} />
-            <Text>Pago...</Text>
+            <Cart.AddressList
+              addresses={addresses}
+              selectedAddress={selectedAddress}
+              setSelectedAddress={setSelectedAddress}
+            />
+            {selectedAddress && <Text>Pago</Text>}
           </View>
         </KeyboardAwareScrollView>
       )}

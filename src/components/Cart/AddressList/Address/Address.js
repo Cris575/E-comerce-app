@@ -2,11 +2,13 @@ import { View, Text, Pressable } from "react-native";
 import { styles } from "./Address.styles";
 
 export function Address(props) {
-  const { address } = props;
+  const { address, selectedAddress, setSelectedAddress } = props;
   const data = address.attributes;
+
+  const stylesSelected = address.id === selectedAddress?.id && styles.checked;
   return (
-    <Pressable>
-      <View style={[styles.container]}>
+    <Pressable onPress={() => setSelectedAddress(address)}>
+      <View style={[styles.container, stylesSelected]}>
         <Text style={styles.title}>{data.title}</Text>
         <Text style={styles.address}>{data.name}</Text>
         <Text style={styles.state}>
