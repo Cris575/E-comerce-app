@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import { productControl } from "../../../api";
 import { styles } from "./CartScreen.styles";
 import { useCart } from "../../../hooks";
+import { Layout } from "../../../layouts";
 import { useState, useEffect } from "react";
 import { fn } from "../../../utils";
 
@@ -35,8 +36,8 @@ export function CartScreen() {
   };
 
   return (
-    <View>
+    <Layout.Cart>
       <Text>CartScreen</Text>
-    </View>
+    </Layout.Cart>
   );
 }
