@@ -6,22 +6,41 @@ export const CarContext = createContext();
 export function CraProvider(props) {
   const { children } = props;
   const [cart, setCart] = useState([]);
-  const [totalProducts, setTotalProducts] = useState(10);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [reload, setReload] = useState(false);
+
+  useEffect(() => {
+    retriveCart();
+    countTotalCart();
+  }, [reload]);
+
+  const onReload = () => setReload((prevState) => !prevState);
 
   const addCart = async (productId) => {
     try {
       await cartCtrl.add(productId);
+      onReload();
     } catch (error) {
       throw error;
     }
   };
 
-  const retriveCart = () => {
-    console.log("retrivecart");
+  const retriveCart = async () => {
+    try {
+      const reponse = await cartCtrl.getAll();
+      setCart(reponse);
+    } catch (error) {
+      throw error;
+    }
   };
 
-  const countTotalCart = () => {
-    console.log("countTotalCart");
+  const countTotalCart = async () => {
+    try {
+      const response = await cartCtrl.count();
+      setTotalProducts(response);
+    } catch (error) {
+      throw error;
+    }
   };
 
   const increaseProduct = () => {

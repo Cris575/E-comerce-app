@@ -22,12 +22,23 @@ async function addCart(productId) {
     products[objIndex].quatity = product.quatity + 1;
   }
 
-  console.log(products);
-
   await AsyncStorage.setItem(ENV.STORAGE.CART, JSON.stringify(products));
+}
+
+async function count() {
+  const products = await getAllProducts();
+
+  let count = 0;
+
+  forEach(products, (product) => {
+    count += product.quatity;
+  });
+
+  return count;
 }
 
 export const cartCtrl = {
   add: addCart,
   getAll: getAllProducts,
+  count,
 };
