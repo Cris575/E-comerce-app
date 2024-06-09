@@ -7,7 +7,9 @@ import { styles } from "./Product.styles";
 
 export function Product(props) {
   const { product } = props;
+  const { deleteProduct } = useCart();
   const mainImagen = product.main_image.data.attributes.url;
+  const onDeleteProduct = () => deleteProduct(product.id);
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -31,7 +33,7 @@ export function Product(props) {
             <IconButton icon="minus" iconColor="#fff" size={19} style={styles.btnQuantity} />
           </View>
         </View>
-        <Button mode="contained" style={styles.btnDelete}>
+        <Button mode="contained" style={styles.btnDelete} onPress={onDeleteProduct}>
           Eliminar
         </Button>
       </View>

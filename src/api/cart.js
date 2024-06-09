@@ -37,8 +37,15 @@ async function count() {
   return count;
 }
 
+async function deleteProduct(productId) {
+  const products = await getAllProducts();
+  const updateProduct = products.filter((product) => product.id !== productId);
+  await AsyncStorage.setItem(ENV.STORAGE.CART, JSON.stringify(updateProduct));
+}
+
 export const cartCtrl = {
   add: addCart,
   getAll: getAllProducts,
   count,
+  delete: deleteProduct,
 };

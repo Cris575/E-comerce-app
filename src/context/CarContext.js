@@ -51,8 +51,13 @@ export function CraProvider(props) {
     console.log("decreaseProduct");
   };
 
-  const deleteProduct = () => {
-    console.log("deleteProduct");
+  const deleteProduct = async (productId) => {
+    try {
+      await cartCtrl.delete(productId);
+      onReload();
+    } catch (error) {
+      throw error;
+    }
   };
 
   const emptyCrad = () => {
