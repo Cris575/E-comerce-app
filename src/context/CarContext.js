@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from "react";
+import { cartCtrl } from "../api";
 
 export const CarContext = createContext();
 
@@ -7,8 +8,12 @@ export function CraProvider(props) {
   const [cart, setCart] = useState([]);
   const [totalProducts, setTotalProducts] = useState(10);
 
-  const addCart = () => {
-    console.log("ADD cart");
+  const addCart = async (productId) => {
+    try {
+      await cartCtrl.addCart(productId);
+    } catch (error) {
+      throw error;
+    }
   };
 
   const retriveCart = () => {
