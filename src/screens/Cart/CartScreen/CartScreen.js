@@ -3,15 +3,17 @@ import { productControl } from "../../../api";
 import { styles } from "./CartScreen.styles";
 import { useCart } from "../../../hooks";
 import { Layout } from "../../../layouts";
+import { LoadingScreen } from "../../../components/Shared";
+import { Cart } from "../../../components/Cart";
 import { useState, useEffect } from "react";
 import { fn } from "../../../utils";
+import { size, map } from "lodash";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export function CartScreen() {
   const [products, setProducts] = useState(null);
   const [totalPayment, setTotalPayment] = useState(null);
   const { cart } = useCart();
-
-  console.log(totalPayment);
 
   useEffect(() => {
     getProducts();
@@ -37,7 +39,19 @@ export function CartScreen() {
 
   return (
     <Layout.Cart>
-      <Text>CartScreen</Text>
+      {!products ? (
+        <LoadingScreen text="Cargando carrito" />
+      ) : size(products) === 0 ? (
+        <Text>Carrito vacio</Text>
+      ) : (
+        <KeyboardAwareScrollView extraScrollHeight={25}>
+          <View style={styles.container}>
+            <Cart.ProductList products={products} />
+            <Text>Direcciónes</Text>
+            <Text>Pago...</Text>
+          </View>
+        </KeyboardAwareScrollView>
+      )}
     </Layout.Cart>
   );
 }
