@@ -7,9 +7,11 @@ import { styles } from "./Product.styles";
 
 export function Product(props) {
   const { product } = props;
-  const { deleteProduct } = useCart();
+  const { deleteProduct, increaseProduct, decreaseProduct } = useCart();
   const mainImagen = product.main_image.data.attributes.url;
   const onDeleteProduct = () => deleteProduct(product.id);
+  const onIncreaseProduct = () => increaseProduct(product.id);
+  const onDecreaseProduct = () => decreaseProduct(product.id);
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -28,9 +30,21 @@ export function Product(props) {
 
         <View style={styles.actions}>
           <View style={styles.selectQuantity}>
-            <IconButton icon="plus" iconColor="#fff" size={19} style={styles.btnQuantity} />
+            <IconButton
+              icon="plus"
+              iconColor="#fff"
+              size={19}
+              style={styles.btnQuantity}
+              onPress={onIncreaseProduct}
+            />
             <TextInput value={product.quatity.toString()} style={styles.inputQuantity} />
-            <IconButton icon="minus" iconColor="#fff" size={19} style={styles.btnQuantity} />
+            <IconButton
+              icon="minus"
+              iconColor="#fff"
+              size={19}
+              style={styles.btnQuantity}
+              onPress={onDecreaseProduct}
+            />
           </View>
         </View>
         <Button mode="contained" style={styles.btnDelete} onPress={onDeleteProduct}>

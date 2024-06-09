@@ -43,12 +43,22 @@ export function CraProvider(props) {
     }
   };
 
-  const increaseProduct = () => {
-    console.log("increaseProduct");
+  const increaseProduct = async (productId) => {
+    try {
+      await cartCtrl.increaseProduct(productId);
+      onReload();
+    } catch (error) {
+      throw error;
+    }
   };
 
-  const decreaseProduct = () => {
-    console.log("decreaseProduct");
+  const decreaseProduct = async (productId) => {
+    try {
+      await cartCtrl.decreaseProduct(productId);
+      onReload();
+    } catch (error) {
+      throw error;
+    }
   };
 
   const deleteProduct = async (productId) => {
