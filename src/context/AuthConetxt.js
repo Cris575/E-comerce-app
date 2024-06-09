@@ -59,7 +59,6 @@ export function AuthProvider(props) {
     logout,
     updateUser,
   };
-
   if (loading) return null;
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
 }

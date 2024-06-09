@@ -1,12 +1,29 @@
 import { View, Text, Image, ActivityIndicator } from "react-native";
+import { useState } from "react";
 import { Button, IconButton } from "react-native-paper";
-import { fn } from "../../../../utils";
+import { fn, screensName } from "../../../../utils";
 import { styles } from "./Product.styles";
+import { useNavigation } from "@react-navigation/native";
+import { wishlistCtrl } from "../../../../api";
+import { useAuth } from "../../../../hooks";
 
 export function Product(props) {
-  const { product } = props;
+  const { product, onReload } = props;
+  const { user } = useAuth();
   const productInfo = product.attributes;
+  const navigation = useNavigation();
+  const [loaging, setLoaging] = useState(false);
 
+  const goToProduct = () => {
+    navigation.navigate(screensName.home.product, { productId: product.id });
+  };
+
+  const deleteFavorite = async () => {
+    setLoaging(true);
+    await wishlistCtrl.delete(user.id, product.id);
+    onReload();
+    setLoaging(false);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.containerImage}>
@@ -25,12 +42,22 @@ export function Product(props) {
           {productInfo.discount && <Text style={styles.oldPrice}>${productInfo.price}</Text>}
         </View>
         <View style={styles.actions}>
-          <Button style={styles.btnGoToProduct} mode="contained">
+          <Button style={styles.btnGoToProduct} mode="contained" onPress={goToProduct}>
             Ver producto
           </Button>
-          <IconButton icon="close" iconColor="#fff" style={styles.btnDelete} />
+          <IconButton
+            icon="close"
+            iconColor="#fff"
+            style={styles.btnDelete}
+            onPress={deleteFavorite}
+          />
         </View>
       </View>
+      {loaging && (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" color="#fff" />
+        </View>
+      )}
     </View>
   );
 }

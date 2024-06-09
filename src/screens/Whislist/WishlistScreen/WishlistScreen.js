@@ -12,13 +12,16 @@ import { styles } from "./WishlistScreen.styles";
 
 export function WhislistScreen() {
   const [products, setProducts] = useState(null);
+  const [relod, setRelod] = useState(false);
   const { user } = useAuth();
 
   useFocusEffect(
     useCallback(() => {
       getProductWishlist();
-    }, [])
+    }, [relod])
   );
+
+  const onReload = () => setRelod((prevSate) => !prevSate);
 
   const getProductWishlist = async () => {
     try {
@@ -45,7 +48,7 @@ export function WhislistScreen() {
           <Text>No tiene ningun producto en tu lista</Text>
         </View>
       ) : (
-        <WishlistList title="Lista de deseos" products={products} />
+        <WishlistList title="Lista de deseos" products={products} onReload={onReload} />
       )}
     </Layout.Basic>
   );
