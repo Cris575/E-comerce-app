@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AuthScreen } from "../../screens/Auth/AuthScreen/AuthScreen";
 import { screensName } from "../../utils";
+import { useCart } from "../../hooks";
 import { HomeStack, WhislistStack, CartStack, AccountStack } from "../stacks";
 import { View } from "react-native";
 import { Badge } from "react-native-paper";
@@ -44,7 +45,7 @@ export function TabNavigation() {
 }
 
 function setIcon(route, routeStatus) {
-  const totalProducts = 6;
+  const { totalProducts } = useCart();
 
   let iconNeme = "";
   let color = "#fff";
