@@ -3,7 +3,7 @@ import { productControl } from "../../../api";
 import { styles } from "./CartScreen.styles";
 import { useCart } from "../../../hooks";
 import { Layout } from "../../../layouts";
-import { LoadingScreen } from "../../../components/Shared";
+import { LoadingScreen, Search } from "../../../components/Shared";
 import { Cart } from "../../../components/Cart";
 import { useState, useEffect } from "react";
 import { fn } from "../../../utils";
@@ -42,7 +42,10 @@ export function CartScreen() {
       {!products ? (
         <LoadingScreen text="Cargando carrito" />
       ) : size(products) === 0 ? (
-        <Text>Carrito vacio</Text>
+        <>
+          <Search.Input />
+          <Cart.Empty />
+        </>
       ) : (
         <KeyboardAwareScrollView extraScrollHeight={25}>
           <View style={styles.container}>
