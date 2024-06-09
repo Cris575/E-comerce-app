@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
-import { productControl } from "../../../api";
+import { productControl, addressCtrl } from "../../../api";
 import { styles } from "./CartScreen.styles";
-import { useCart } from "../../../hooks";
+import { useCart, useAuth } from "../../../hooks";
 import { Layout } from "../../../layouts";
 import { LoadingScreen, Search } from "../../../components/Shared";
 import { Cart } from "../../../components/Cart";
@@ -14,10 +14,16 @@ export function CartScreen() {
   const [products, setProducts] = useState(null);
   const [totalPayment, setTotalPayment] = useState(null);
   const { cart } = useCart();
+  const { user } = useAuth();
+  const [addresses, setAddresses] = useState(null);
 
   useEffect(() => {
     getProducts();
   }, [cart]);
+
+  useEffect(() => {
+    loadAddresses();
+  }, [addresses]);
 
   const getProducts = async () => {
     const productTemp = [];
@@ -37,6 +43,11 @@ export function CartScreen() {
     setTotalPayment(totalPaymentTemp);
   };
 
+  const loadAddresses = async () => {
+    const response = await addressCtrl.getAll(user.id);
+    setAddresses(response.data);
+  };
+
   return (
     <Layout.Cart>
       {!products ? (
@@ -50,7 +61,7 @@ export function CartScreen() {
         <KeyboardAwareScrollView extraScrollHeight={25}>
           <View style={styles.container}>
             <Cart.ProductList products={products} />
-            <Text>Direcciónes</Text>
+            <Cart.AddressList addresses={addresses} />
             <Text>Pago...</Text>
           </View>
         </KeyboardAwareScrollView>
