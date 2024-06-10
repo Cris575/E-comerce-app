@@ -19,6 +19,6 @@ export const ENV = {
   },
   STRIPE: {
     PUBLISHEBLE_KEY:
-      "pk_test_51N89QtLQJRBDb8fHoKwkE6XOHKQTkTgb0WGvAPWfMq2uZRQBuzpHrGr1GL1v70ZMJ9sGsDJlGBHxdovC9KDHtr4N008zDTQ7nB",
+      "pk_test_51PIEmLIODRq79970vd1oeuJfgc6oaRxfDQPkGqUuzmBQvudlwGaE1mppxkGRXPMGUyZuR5R1wWNXhvH5uZbGn9nG00EDQN77rJ",
   },
 };

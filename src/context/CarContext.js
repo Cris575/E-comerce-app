@@ -70,8 +70,13 @@ export function CraProvider(props) {
     }
   };
 
-  const emptyCrad = () => {
-    console.log("emptyCrad");
+  const emptyCrad = async () => {
+    try {
+      await cartCtrl.deleteAll();
+      onReload();
+    } catch (error) {
+      throw error;
+    }
   };
 
   const data = {

@@ -5,17 +5,36 @@ import { styles } from "./Payment.styles";
 import { initialValues, validationSchema } from "./Payment.form";
 import { useFormik } from "formik";
 import Toast from "react-native-root-toast";
+import { useNavigation } from "@react-navigation/native";
+import { ENV, screensName } from "../../../utils";
+import { orderCtrl } from "../../../api";
+import { useAuth, useCart } from "../../../hooks";
+
+const stripe = require("stripe-client")(ENV.STRIPE.PUBLISHEBLE_KEY);
 
 export function Payment(props) {
   const { totalPayment, selectedAddress, products } = props;
+  const { user } = useAuth();
+  const { emptyCrad } = useCart();
+  const navigation = useNavigation();
+
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        console.log(formValue);
+        const result = await stripe.createToken({ card: formValue });
+
+        if (result?.error) {
+          Toast.show(result.error.message, {
+            position: Toast.positions.CENTER,
+          });
+        } else {
+          await emptyCrad();
+        }
       } catch (error) {
+        console.log(error);
         Toast.show("Erro al realizar el pago", {
           position: Toast.positions.CENTER,
         });
