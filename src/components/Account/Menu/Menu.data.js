@@ -28,12 +28,12 @@ export const accountMenu = [
 ];
 
 export const appMenu = [
-  {
-    title: "Pedidos",
-    description: "Lista de todos los pedidos",
-    leftIcon: "order-bool-descending-variant",
-    screen: screensName.account.orders,
-  },
+  // {
+  //   title: "Pedidos",
+  //   description: "Lista de todos los pedidos",
+  //   leftIcon: "order-bool-descending-variant",
+  //   screen: screensName.account.orders,
+  // },
   {
     title: "Mis direcciones",
     description: "Administra tus direcciones de envio",
