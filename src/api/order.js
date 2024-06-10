@@ -25,23 +25,23 @@ async function payment(token, userId, products, address) {
   }
 }
 
-// async function getAll(userId) {
-//   try {
-//     const userFilter = `filters[user][id][$eq]=${userId}`;
-//     const sortFilter = "sort[0]=createdAt:desc";
-//     const filters = `${userFilter}&${sortFilter}`;
+async function getAll(userId) {
+  try {
+    const userFilter = `filters[user][id][$eq]=${userId}`;
+    const sortFilter = "sort[0]=createdAt:desc";
+    const filters = `${userFilter}&${sortFilter}`;
 
-//     const url = `${ENV.API_URL}/${ENV.ENDPOINTS.ORDERS}?${filters}`;
+    const url = `${ENV.API_URL}/${ENV.ENDPOINTS.ORDERS}?${filters}`;
 
-//     const response = await authFetch(url);
+    const response = await authFech(url);
 
-//     if (response.status !== 200) throw response;
+    if (response.status !== 200) throw response;
 
-//     return await response.json();
-//   } catch (error) {
-//     throw error;
-//   }
-// }
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
+}
 
 // async function getOrderById(orderId) {
 //   try {
@@ -60,6 +60,6 @@ async function payment(token, userId, products, address) {
 
 export const orderCtrl = {
   payment,
-  //   getAll,
+  getAll,
   //   getById: getOrderById,
 };
