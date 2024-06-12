@@ -13,12 +13,12 @@ export const accountMenu = [
     leftIcon: "at",
     screen: screensName.account.changeEmail,
   },
-  {
-    title: "Cambiar nombre de usuario",
-    description: "Cambia el nombre de usuario de tu cuenta",
-    leftIcon: "card-account-details-outline",
-    screen: screensName.account.changeUsername,
-  },
+  // {
+  //   title: "Cambiar nombre de usuario",
+  //   description: "Cambia el nombre de usuario de tu cuenta",
+  //   leftIcon: "card-account-details-outline",
+  //   screen: screensName.account.changeUsername,
+  // },
   {
     title: "Cambiar contraseña",
     description: "Cambia el contraseña de tu cuenta",
