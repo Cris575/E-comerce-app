@@ -34,7 +34,6 @@ export function Payment(props) {
           await emptyCrad();
         }
       } catch (error) {
-        console.log(error);
         Toast.show("Erro al realizar el pago", {
           position: Toast.positions.CENTER,
         });

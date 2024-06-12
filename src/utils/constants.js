@@ -1,5 +1,6 @@
 export const ENV = {
-  API_URL: "http://192.168.0.3:1337/api",
+  // API_URL: "http://192.168.0.3:1337/api",
+  API_URL: "https://loved-bird-3e61b583f1.strapiapp.com/api",
   ENDPOINTS: {
     REGISTER: "auth/local/register",
     LOGIN: "auth/local",

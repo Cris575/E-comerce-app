@@ -24,7 +24,7 @@ export function CartScreen() {
 
   useEffect(() => {
     loadAddresses();
-  }, []);
+  }, [addresses]);
 
   const getProducts = async () => {
     const productTemp = [];

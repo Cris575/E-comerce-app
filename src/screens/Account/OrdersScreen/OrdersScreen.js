@@ -21,7 +21,6 @@ export function OrdersScreen() {
       const response = await orderCtrl.getAll(user.id);
       setOrders(response);
     } catch (error) {
-      console.log(error);
       Toast.show("Error", {
         position: Toast.positions.CENTER,
       });

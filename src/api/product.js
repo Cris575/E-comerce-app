@@ -7,9 +7,7 @@ async function getLastedPublished(limite = 20) {
     const populateFilter = "populate=*";
     const filters = `${sortFilter}&${paginationFilter}&${populateFilter}`;
     const url = `${ENV.API_URL}/${ENV.ENDPOINTS.PRODUCTS}?${filters}`;
-
     const response = await fetch(url);
-
     if (response.status !== 200) throw response;
 
     return await response.json();
@@ -26,7 +24,6 @@ async function searchProduct(text) {
     const filters = `${searchTitleFilter}&${pagination}&${populate}`;
 
     const url = `${ENV.API_URL}/${ENV.ENDPOINTS.PRODUCTS}?${filters}`;
-
     const response = await fetch(url);
 
     if (response.status !== 200) throw response;
